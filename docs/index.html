@@ -1,0 +1,710 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <!-- Meta tags for social media banners, these should be filled in appropriatly as they are your "business card" -->
+  <!-- Replace the content tag with appropriate information -->
+  <meta name="description" content="DESCRIPTION META TAG">
+  <meta property="og:title" content="SOCIAL MEDIA TITLE TAG"/>
+  <meta property="og:description" content="SOCIAL MEDIA DESCRIPTION TAG TAG"/>
+  <meta property="og:url" content="URL OF THE WEBSITE"/>
+  <!-- Path to banner image, should be in the path listed below. Optimal dimenssions are 1200X630-->
+  <meta property="og:image" content="static/image/your_banner_image.png" />
+  <meta property="og:image:width" content="1200"/>
+  <meta property="og:image:height" content="630"/>
+
+
+  <meta name="twitter:title" content="TWITTER BANNER TITLE META TAG">
+  <meta name="twitter:description" content="TWITTER BANNER DESCRIPTION META TAG">
+  <!-- Path to banner image, should be in the path listed below. Optimal dimenssions are 1200X600-->
+  <meta name="twitter:image" content="static/images/your_twitter_banner_image.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <!-- Keywords for your paper to be indexed by-->
+  <meta name="keywords" content="KEYWORDS SHOULD BE PLACED HERE">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+
+  <title>VerifyBench: Benchmarking Reference-based Reward Systems for Large Language Models</title>
+<!--  <link rel="icon" type="image/x-icon" href="static/images/favicon.ico">-->
+  <link href="https://fonts.googleapis.com/css?family=Google+Sans|Noto+Sans|Castoro"
+  rel="stylesheet">
+
+  <link rel="stylesheet" href="static/css/bulma.min.css">
+  <link rel="stylesheet" href="static/css/bulma-carousel.min.css">
+  <link rel="stylesheet" href="static/css/bulma-slider.min.css">
+  <link rel="stylesheet" href="static/css/fontawesome.all.min.css">
+  <link rel="stylesheet"
+  href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
+  <link rel="stylesheet" href="static/css/index.css">
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://documentcloud.adobe.com/view-sdk/main.js"></script>
+  <script defer src="static/js/fontawesome.all.min.js"></script>
+  <script src="static/js/bulma-carousel.min.js"></script>
+  <script src="static/js/bulma-slider.min.js"></script>
+  <script src="static/js/index.js"></script>
+  <script>
+    window.MathJax = {
+      tex: {
+        inlineMath: [['$', '$'], ['\\(', '\\)']],
+        displayMath: [['$$', '$$'], ['\\[', '\\]']],
+        processEscapes: true
+      },
+      svg: {
+        fontCache: 'global'
+      }
+    };
+  </script>
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+</head>
+
+
+
+
+<body>
+<nav class="navbar" role="navigation" aria-label="main navigation">
+  <div class="navbar-brand">
+    <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false">
+      <span aria-hidden="true"></span>
+      <span aria-hidden="true"></span>
+      <span aria-hidden="true"></span>
+    </a>
+  </div>
+  <div class="navbar-menu">
+    <div class="navbar-start" style="flex-grow: 1; justify-content: center;">
+      <a class="navbar-item" href="https://github.com/ZJU-REAL">
+      <span class="icon">
+          <i class="fab fa-github"></i>
+      </span>
+      </a>
+
+      <div class="navbar-item has-dropdown is-hoverable">
+        <a class="navbar-link">
+          More Research
+        </a>
+        <div class="navbar-dropdown">
+          <a class="navbar-item" href="https://zju-real.github.io/SBT/">
+            Self-Braking Tuning
+          </a>
+          <a class="navbar-item" href="https://zju-real.github.io/ViewSpatial-Page/">
+            ViewSpatial-Bench
+          </a>
+          <a class="navbar-item" href="https://ZJU-REAL.github.io/CoT-Bridge">
+            CoT-Bridge
+          </a>
+          <a class="navbar-item" href="https://ZJU-REAL.github.io/InftyThink">
+            InftyThink
+          </a>
+        </div>
+
+        
+      </div>
+    </div>
+  </div>
+</nav>
+
+  <section class="hero">
+    <div class="hero-body">
+      <div class="container is-max-desktop">
+        <div class="columns is-centered">
+          <div class="column has-text-centered">
+            <h1 class="title is-1 publication-title">VerifyBench: Benchmarking Reference-based Reward Systems for Large Language Models</h1>
+              <div class="is-size-5 publication-authors">
+                <span class="author-block">
+                  <a href="mailto:yanyuchen@zju.edu.cn" target="_blank">Yuchen Yan</a><sup>1,2,*</sup>,
+                </span>
+                <span class="author-block">
+                  Jin Jiang<sup>2,3</sup>,
+                </span>
+                <span class="author-block">
+                  Zhenbang Ren<sup>1,4</sup>,
+                </span>
+                <span class="author-block">
+                  Yijun Li<sup>5</sup>,
+                </span>
+                <span class="author-block">
+                  Xudong Cai<sup>1,5</sup>,
+                </span>
+                <span class="author-block">
+                  Yang Liu<sup>2</sup>,
+                </span>
+                <br>
+                <span class="author-block">
+                  Xin Xu<sup>6</sup>,
+                </span>
+                <span class="author-block">
+                  Mengdi Zhang<sup>2</sup>,
+                </span>
+                <span class="author-block">
+                  <a href="mailto:jshao@zju.edu.cn" target="_blank">Jian Shao</a><sup>1,†</sup>,
+                </span>
+                <span class="author-block">
+                  <a href="mailto:syl@zju.edu.cn" target="_blank">Yongliang Shen</a><sup>1,†</sup>,
+                </span>
+                <span class="author-block">
+                  Jun Xiao<sup>1</sup>,
+                </span>
+                <span class="author-block">
+                  Yueting Zhuang<sup>1</sup>
+                </span>
+              </div>
+                  <div class="is-size-5 publication-authors">
+                    <br>
+                    <span class="author-block"><sup>1</sup>Zhejiang University</span>
+                    <span class="author-block"><sup>2</sup>Meituan Group</span>
+                    <span class="author-block"><sup>3</sup>Peking University</span>
+                    <br>
+                    <span class="author-block"><sup>4</sup>University of Electronic Science and Technology of China</span>
+                    <br>
+                    <span class="author-block"><sup>5</sup>Beijing University of Posts and Telecommunications</span>
+                    <br>
+                    <span class="author-block"><sup>6</sup>The Hong Kong University of Science and Technology</span>
+                    <br>
+                    <br>
+                    <span class="author-block">Preprint. Under review.</span>
+                    <span class="eql-cntrb"><small><br><sup>*</sup>Work done during internship at Meituan Group.<sup>†</sup>Corresponding Author</small></span>
+                  </div>
+
+                  <!-- Github link -->
+                  <span class="link-block">
+                    <a href="https://github.com/ZJU-REAL/InftyThink" target="_blank" class="external-link button is-normal is-rounded is-dark">
+                    <span class="icon">
+                      <i class="fab fa-github"></i>
+                    </span>
+                    <span>Code</span>
+                    </a>
+                  </span>
+
+                  <!-- ArXiv abstract Link -->
+                  <span class="link-block">
+                    <a href="https://arxiv.org/abs/2503.06692" target="_blank" class="external-link button is-normal is-rounded is-dark">
+                      <span class="icon">
+                        <i class="ai ai-arxiv"></i>
+                      </span>
+                      <span>arXiv</span>
+                    </a>
+                  </span>
+
+                  <span class="link-block">
+                    <a href="https://huggingface.co/datasets/ZJU-REAL/VerifyBench" class="external-link button is-normal is-rounded is-dark">
+                    <span class="icon">
+                      <!-- <i class="far fa-images"></i> -->
+                      <p style="font-size:18px">🤗</p>
+                      <!-- 🔗 -->
+                    </span>
+                  <span>Dataset</span>
+
+                </a>
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+
+<!-- Teaser video-->
+<!--<section class="hero teaser">-->
+<!--  <div class="container is-max-desktop">-->
+<!--    <div class="hero-body">-->
+<!--      <video poster="" id="tree" autoplay controls muted loop height="100%">-->
+<!--        &lt;!&ndash; Your video here &ndash;&gt;-->
+<!--        <source src="static/videos/banner_video.mp4"-->
+<!--        type="video/mp4">-->
+<!--      </video>-->
+<!--      <h2 class="subtitle has-text-centered">-->
+<!--        Aliquam vitae elit ullamcorper tellus egestas pellentesque. Ut lacus tellus, maximus vel lectus at, placerat pretium mi. Maecenas dignissim tincidunt vestibulum. Sed consequat hendrerit nisl ut maximus. -->
+<!--      </h2>-->
+<!--    </div>-->
+<!--  </div>-->
+<!--</section>-->
+
+
+<section class="hero teaser">
+  <div class="container is-max-desktop">
+    <div class="hero-body">
+      <img src="static/images/intro.png" alt="Teaser Image for VerifyBench Project" style="width: 70%; display: block; margin: 0 auto;">
+      <br>
+      <h2 class="subtitle has-text-centered">
+        The core distinction between existing reward benchmarks and VerifyBench & VerifyBench-Hard.
+      </h2>
+    </div>
+  </div>
+</section>
+
+<!-- End teaser video -->
+
+<!-- Paper abstract -->
+<section class="section hero is-light">
+  <div class="container is-max-desktop">
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-four-fifths">
+        <h2 class="title is-3">Abstract</h2>
+        <div class="content has-text-justified">
+          <p>
+Large reasoning models such as OpenAI o1 and DeepSeek-R1 have demonstrated remarkable performance in complex reasoning tasks. A critical component of their training is the incorporation of reference-based reward systems within reinforcement learning (RL), where model outputs are evaluated against ground truth references. However, existing reward benchmarks focus on preference comparisons between responses rather than evaluating verification against ground truth references, leaving a critical gap in our ability to evaluate verification systems used in reasoning model training. In this paper, we introduce VerifyBench and its challenging variant VerifyBench-Hard, two benchmarks specifically designed to assess reference-based reward systems. These benchmarks are constructed through meticulous data collection and curation, followed by careful human annotation to ensure high quality. Our comprehensive evaluation reveals that while larger model-based verifiers show promise on standard cases, all current systems demonstrate substantial room for improvement on challenging instances. Through systematic analysis of performance patterns across reasoning tasks and error categories, we provide insights for advancing reference-based reward systems. These benchmarks establish a standardized framework for improving verification accuracy, ultimately enhancing reasoning capabilities in models trained via RL.          
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<!-- End paper abstract -->
+
+
+<section class="hero is small">
+  <div class="container is-max-desktop">
+    <div class="hero-body">
+      <h2 class="title is-3">Benchmark Construction Pipeline</h2>
+      <img src="static/images/data.png" alt="Systematic pipeline for reconstructing vanilla-style long-context reasoning data into the InftyThink-style format." style="width: 100%; max-height: 600px; object-fit: cover; border-radius: 10px; margin-bottom: 1.5rem;">
+      <p>
+        Overview of the benchmark construction process. The upper section outlines the pipeline used to construct VerifyBench, whereas the lower section details the pipeline for VerifyBench-Hard. The components highlighted by black boxes denote the final entries included in the benchmark.
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- ...existing code... -->
+<section class="section hero is-light" style="padding-left:0;padding-right:0;">
+  <div class="container" style="max-width:100vw; width:100vw;">
+    <div class="hero-body">
+      <!-- h2与数据框左对齐 -->
+      <div style="display:flex; justify-content:center; width:100%;">
+        <div style="width:100%; max-width:800px; padding:0;">
+          <h2 class="title is-3" style="text-align:left; margin-left:0; padding-left:0;">Benchmark Examples</h2>
+          <!-- 数据展示控件开始 -->
+          <div id="example-switcher" style="margin-bottom: 1.5rem; width: 100%;">
+            <div class="buttons has-addons is-centered" style="justify-content:center;">
+              <button class="button is-link is-light" onclick="showExample(0)" id="ex-btn-0">Numeric Values</button>
+              <button class="button is-link is-light" onclick="showExample(1)" id="ex-btn-1">Expressions</button>
+              <button class="button is-link is-light" onclick="showExample(2)" id="ex-btn-2">Multi-choice</button>
+              <button class="button is-link is-light" onclick="showExample(3)" id="ex-btn-3">String</button>
+            </div>
+            <div id="example-content" style="min-width: 100%;"></div>
+          </div>
+        </div>
+      </div>
+      <style>
+        /* 保证数据展示区宽度固定且自适应居中，左右对齐 */
+        #example-switcher {
+          margin-left: auto;
+          margin-right: auto;
+          width: 100%;
+          max-width: 800px;
+        }
+        #example-content .box {
+          width: 100%;
+          box-sizing: border-box;
+          word-wrap: break-word;
+          white-space: normal;
+          overflow-wrap: break-word;
+          margin: 0 0 0.75rem 0;
+        }
+        #example-content .columns {
+          margin: 0 !important;
+          display: flex;
+          gap: 16px;
+          width: 100%;
+        }
+        #example-content .column.is-half {
+          padding: 0 !important;
+          flex: 1;
+          width: 50%;
+          max-width: 50%;
+        }
+        #example-content .completion-boxes {
+          display: flex;
+          gap: 16px;
+          width: 100%;
+          margin-bottom: 0;
+        }
+        #example-content .completion-box {
+          flex: 1;
+          width: 50%;
+          display: flex;
+          flex-direction: column;
+        }
+        #example-content .completion-content {
+          flex-grow: 1;
+          height: 100%;
+        }
+        @media (max-width: 900px) {
+          #example-switcher {
+            max-width: 98vw;
+            padding: 0 1rem;
+          }
+          #example-content .columns {
+            flex-direction: column;
+            gap: 0.75rem;
+          }
+          #example-content .column.is-half {
+            width: 100%;
+            max-width: 100%;
+          }
+          #example-content .completion-boxes {
+            flex-direction: column;
+            gap: 0.75rem;
+          }
+          #example-content .completion-box {
+            width: 100%;
+          }
+        }
+      </style>
+      <script>
+        // 示例数据
+        const examples = [
+          {
+            question: "Evaluate the integral $\\int_{i\\infty}^\\pi e^{ix} dx$ using contour integration. Explain the concept of contour integration and how it applies to this problem. Provide a clear and detailed solution, including any necessary diagrams or illustrations.",
+            answer: "i",
+            completions: [
+              { text: "<think>\nAlright, so I have this integral to evaluate: ∫ from i∞ to π of e^{ix} dx. Hmm, that looks a bit tricky. The limits are from i∞ to π, which are complex numbers, so this isn't a standard real integral. I remember that when dealing with integrals with complex limits, contour integration is a useful technique. Let me try to recall what contour integration is and how it applies here.\n\n...\n\nTherefore, the value of the integral is \\(\\boxed{i}\\).", correct: true },
+              { text: "To evaluate the integral \\(\\int_{i\\infty}^\\pi e^{ix} dx\\) using contour integration, we need to understand the concept of contour integration and how to apply it to this specific problem. Contour integration is a method in complex analysis where we integrate a complex function over a path in the complex plane, often a contour.\n\n...\n\nTherefore, the final answer is: \\[ \\boxed{0} \\]", correct: false }
+            ]
+          },
+          {
+            question: "Identify the amount $x_n$ of sequences $(a_1,\\cdots,a_n)$ of integers $\\;a_i \\geq 0,\\;\\; 1 \\leq i \\leq n\\;\\;$ so that $\\;\\sum_{i=1}^j a_i \\geq j$ for $1 \\leq j \\leq n - 1\\;$ and $\\;\\sum_{i=1}^n a_i = n.$",
+            answer: "C_n",
+            completions: [
+              { text: "Okay, so I need to figure out how many sequences of non-negative integers \\((a_1, a_2, \\ldots, a_n)\\) there are such that two conditions are satisfied. The first condition is that for each \\(j\\) from 1 to \\(n-1\\), the sum of the first \\(j\\) terms, \\(\\sum_{i=1}^j a_i\\), is at least \\(j\\). The second condition is that the total sum of all the terms, \\(\\sum_{i=1}^n a_i\\), is exactly \\(n\\).\n\n...\n\nThe sequences for each \\(n\\) correspond to the Catalan numbers. The nth Catalan number is given by:\n\\[\nC(n) = \\frac{1}{n + 1} \\binom{2n}{n}\n\\]\n\nThus, the number of such sequences is the \\(n\\)-th Catalan number.\n\n\\[\n\\boxed{\\dfrac{1}{n+1} \\dbinom{2n}{n}}\n\\]", correct: true },
+              { text: "Okay, so I need to figure out the number of sequences (a₁, a₂, ..., aₙ) where each aᵢ is a non-negative integer. The conditions are that for each j from 1 to n-1, the sum of the first j terms is at least j, and the total sum of all n terms is exactly n. Hmm, let me try to unpack this step by step.\n\nThus, the number of such sequences is the \\((n-1)\\)th Catalan number, leading to the final answer:\n\n\\[\n\\boxed{\\dfrac{1}{n} \\dbinom{2n - 2}{n - 1}}\n\\]", correct: false }
+            ]
+          },
+          {
+            question: "Given real numbers $x$ and $y$ satisfying the equation of curve $C$: $x^{2}+y^{2}-2x-2=0$, which of the following options is correct?  A: The maximum value of $x^{2}+y^{2}$ is $\\sqrt{3}+1$  B: The maximum value of $\\frac{y+1}{x+1}$ is $2+\\sqrt{6}$  C: The minimum value of $|x-y+3|$ is $2\\sqrt{2}-\\sqrt{3}$  D: A tangent line is drawn through the point $(0, \\sqrt{2})$ on curve $C$, then the equation of the tangent line is $x-\\sqrt{2}y+2=0$",
+            answer: "Given the equation of curve $C$: $x^{2}+y^{2}-2x-2=0$, we can complete the square to rewrite it as $\\left(x-1\\right)^{2}+y^{2}=3$. This represents a circle with center at $\\left(1,0\\right)$ and radius $\\sqrt{3}$.\n\n...\n\nHence, the correct options are $\\boxed{BD}$.",
+            completions: [
+              { text: "Alright, I have this problem about a curve defined by the equation \\( x^{2} + y^{2} - 2x - 2 = 0 \\). I need to analyze four options (A, B, C, D) and determine which one is correct. Let's break it down step by step.\n\n\n...\n\n\n$\\boxed{B, D}$   **Final Answer:** $\\boxed{B, D}$", correct: true },
+              { text: "Let the given equation of the curve be $x^2 + y^2 - 2x - 2 = 0$. We can rewrite this equation by completing the square: $x^2 - 2x + y^2 = 2$ $(x^2 - 2x + 1) + y^2 = 2 + 1$ $(x-1)^2 + y^2 = 3$ This is the equation of a circle with center $(1, 0)$ and radius $\\sqrt{3}$. We want to find the maximum value of $x^2 + y^2$. From the equation, we have $x^2 + y^2 = 3$. Thus, the maximum value of $x^2 + y^2$ is 3.\n\n...\n\nFinal Answer: The final answer is $\\boxed{3}$", correct: false }
+            ]
+          },
+          {
+            question: "Context:Things that visit the hamster, attack the cat, and are heavy, are also lazy. If something is strong, is furry, and is obese, then it is big. The cheetah is rough. If an animal is rough, is strong, and is nice, then it is funny. All animals that are round, are smart, and are nice, are also kind. The wolf attacks the cat. The hamster is quiet. If something is strong, is obese, and is awful, then it is also big. If something is dull, is rough, and is slow, it is also boring. The cat is adorable. The cheetah needs the hamster. The hamster is nice. If an animal is slow, is awful, and is dull, it is also boring. The cat is furry. If an animal is small, is beautiful, and is furry, then it is funny. The wolf is awful. The hamster is smart. The cat is small. If an animal is smart, is beautiful, and is small, it is also funny. The cheetah is slow. If something likes the cat, needs the hamster, and is reckless, then it is fierce. All animals that are dull, are small, and are smart, are big. The wolf is obese. If an animal is beautiful, is awful, and is slow, it is also kind. If an animal is furry, is round, and is obese, then it is boring. The cheetah is reckless. If something is nice, is round, and is rough, it is also kind. \nQuestion: The observation is:The cheetah is fierce. \nWhat other conditions are needed to fulfill the description in the observation based on the existing context rules.",
+            answer: "The cheetah likes the cat.",
+            completions: [
+              { text: "To determine the other conditions needed to fulfill the description in the observation \"The cheetah is fierce\" based on the existing context rules, we need to analyze the rules that involve the cheetah and the condition of being fierce.\n\nThe relevant rule is: \"If something likes the cat, needs the hamster, and is reckless, then it is fierce.\"\n\nFrom this rule, we can see that the cheetah must satisfy the following conditions: 1. The cheetah likes the cat. 2. The cheetah needs the hamster. 3. The cheetah is reckless.\n\nWe already know from the context that: - The cheetah needs the hamster. - The cheetah is reckless.\n\nSo, the only additional condition needed is: 1. The cheetah likes the cat.\n\nTherefore, the other condition needed to fulfill the description in the observation is \\boxed{\\text{The cheetah likes the cat}}.", correct: true },
+              { text: "The cheetah is fierce.\nThe cheetah is strong.\nThe cheetah is nice.\nThe cheetah is rough.\nThe cheetah is big.\nThe cheetah is funny.\nThe cheetah is kind.\nThe cheetah is big.\nThe cheetah is big.\nThe cheetah is big.", correct: false }
+            ]
+          }
+        ];
+
+        function showExample(idx) {
+          // 按钮高亮
+          for (let i = 0; i < 4; i++) {
+            document.getElementById('ex-btn-' + i).classList.remove('is-link');
+            document.getElementById('ex-btn-' + i).classList.add('is-light');
+          }
+          document.getElementById('ex-btn-' + idx).classList.add('is-link');
+          document.getElementById('ex-btn-' + idx).classList.remove('is-light');
+
+          const ex = examples[idx];
+          const content = document.getElementById('example-content');
+          content.innerHTML = `
+            <div class="box" style="margin-bottom: 0.75rem;">
+              <strong>Question:</strong><br>${ex.question.split('\n').join('<br>')}
+            </div>
+            <div class="box" style="margin-bottom: 0.75rem;">
+              <strong>Answer:</strong><br>${ex.answer.split('\n').join('<br>')}
+            </div>
+            <div class="completion-boxes">
+              <div class="completion-box">
+                <div class="box completion-content" style="background:#e6f9ed; margin-bottom:0;">
+                  <strong>Completion (Correct)</strong><br>
+                  ${ex.completions[0].text.split('\n').join('<br>')}
+                </div>
+              </div>
+              <div class="completion-box">
+                <div class="box completion-content" style="background:#ffeaea; margin-bottom:0;">
+                  <strong>Completion (Wrong)</strong><br>
+                  ${ex.completions[1].text.split('\n').join('<br>')}
+                </div>
+              </div>
+            </div>
+          `;
+          
+          // 确保 MathJax 已加载
+          if (typeof MathJax !== 'undefined') {
+            // 使用 Promise 来确保渲染完成
+            MathJax.typesetPromise([content]).catch((err) => console.log('MathJax error:', err));
+          } else {
+            console.warn('MathJax not loaded');
+          }
+        }
+
+        // 立即显示第一个示例
+        showExample(0);
+
+        // 等待 DOM 和 MathJax 都加载完成后再次确保显示第一个示例
+        document.addEventListener('DOMContentLoaded', function() {
+          if (typeof MathJax !== 'undefined') {
+            MathJax.startup.promise.then(() => {
+              showExample(0);
+            });
+          } else {
+            showExample(0);
+          }
+        });
+      </script>
+      <!-- 数据展示控件结束 -->
+    </div>
+  </div>
+</section>
+<!-- ...existing code... -->
+
+<section class="section hero">
+  <div class="container is-max-desktop">
+    <div class="hero-body">
+      <h2 class="title is-3">Overall Performance</h2>
+      <p>
+        We evaluate the performance of various verification approaches on both VerifyBench and VerifyBench-hard. For rule-based baselines, we adopt the widely used math-verify package. In the LLM-as-a-judge setting, we prompt LLMs to perform verification.
+      </p>
+      <img src="static/images/performance.png" alt="Main experimental results of CoT-Bridge" style="width: 100%; max-height: 800px; object-fit: cover; border-radius: 10px; margin-bottom: 1.5rem;">
+      <p>
+        Overall performance(%) of VerifyBench and VerifyBench-Hard. <b>Num</b> stands for Numeric Values, <b>Exp</b> stands for Expressions, <b>MC</b> stands for Multi-choice and <b>Str</b> stands for String.
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- Image carousel-->
+<section class="hero is-small is-light">
+  <div class="hero-body">
+    <div class="container">
+      <div id="results-carousel" class="carousel results-carousel">
+        <div class="item">
+          <div class="carousel-content">
+            <h2 class="title is-3 has-text-centered">Benchmark statistics</h2>
+            <div class="image-container">
+              <img src="static/images/t1.png" alt="Reinforcement Learning Training Curve"/>
+            </div>
+            <div class="caption-container">
+              <h2 class="subtitle has-text-centered">
+                Benchmark statistics of VerifyBench and VerifyBench-Hard.
+              </h2>
+            </div>
+          </div>
+        </div>
+
+        <div class="item">
+          <div class="carousel-content">
+            <h2 class="title is-3 has-text-centered">Reference-answers Play an Important Role in Verification</h2>
+            <div class="image-container">
+              <img src="static/images/t3.png" alt="Reinforcement Learning Results"/>
+            </div>
+            <div class="caption-container">
+              <h2 class="subtitle has-text-centered">
+                Evaluation results(%) about how including the reference answer in the prompt influences the performance of LLM-as-a-judge.
+              </h2>
+            </div>
+          </div>
+        </div>
+
+        <div class="item">
+          <div class="carousel-content">
+            <h2 class="title is-3 has-text-centered">Performance of Reference-free Reward Models</h2>
+            <div class="image-container">
+              <img src="static/images/t4.png" alt="MY ALT TEXT"/>
+            </div>
+            <div class="caption-container">
+              <h2 class="subtitle has-text-centered">
+                The performance(%) of existing reward models on VerifyBench without access to reference answers, as well as a comparison with existing reward benchmarks.
+              </h2>
+            </div>
+          </div>
+        </div>
+
+        <div class="item">
+          <div class="carousel-content">
+            <h2 class="title is-3 has-text-centered">Fine-grained error analysis</h2>
+            <div class="image-container">
+              <img src="static/images/t5.png" alt="MY ALT TEXT"/>
+            </div>
+            <div class="caption-container">
+              <h2 class="subtitle has-text-centered">
+                Model performance(%) across the fine-grained taxonomy on VerifyBench. Q32B stands for Qwen3-32B, g4o stands for gpt-4o-2024-11-20, L70B stands for Llama-3.3-70B-Instruct and L3B stands for Llama-3.2-3B-Instruct.
+              </h2>
+            </div>
+          </div>
+        </div>
+
+        <div class="item">
+          <div class="carousel-content">
+            <h2 class="title is-3 has-text-centered">Correlation Analysis with Rejective Fine-tuning</h2>
+            <div class="image-container">
+              <img src="static/images/f3.png" alt="MY ALT TEXT"/>
+            </div>
+            <div class="caption-container">
+              <h2 class="subtitle has-text-centered">
+                The performance(%) of RFT across different LLM judges which have various performance on VerifyBench.
+              </h2>
+            </div>
+          </div>
+        </div>
+
+
+      </div>
+    </div>
+  </div>
+
+  <style>
+    .carousel-content {
+      display: flex;
+      flex-direction: column;
+      height: 100%;
+      padding: 20px;
+    }
+
+    .image-container {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 20px 0;
+    }
+
+    .image-container img {
+      max-height: 400px;
+      width: auto;
+      object-fit: contain;
+    }
+
+    .caption-container {
+      margin-bottom: 40px; /* Increase space between caption and pagination dots */
+    }
+
+    .carousel .item {
+      height: 100%;
+    }
+
+    .carousel-content .title {
+      margin-bottom: 1rem;
+    }
+  </style>
+</section>
+
+<!-- End image carousel -->
+
+
+
+
+<!--&lt;!&ndash; Youtube video &ndash;&gt;-->
+<!--<section class="hero is-small is-light">-->
+<!--  <div class="hero-body">-->
+<!--    <div class="container">-->
+<!--      &lt;!&ndash; Paper video. &ndash;&gt;-->
+<!--      <h2 class="title is-3">Video Presentation</h2>-->
+<!--      <div class="columns is-centered has-text-centered">-->
+<!--        <div class="column is-four-fifths">-->
+<!--          -->
+<!--          <div class="publication-video">-->
+<!--            &lt;!&ndash; Youtube embed code here &ndash;&gt;-->
+<!--            <iframe src="https://www.youtube.com/embed/JkaxUblCGz0" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>-->
+<!--          </div>-->
+<!--        </div>-->
+<!--      </div>-->
+<!--    </div>-->
+<!--  </div>-->
+<!--</section>-->
+<!--&lt;!&ndash; End youtube video &ndash;&gt;-->
+
+
+<!--&lt;!&ndash; Video carousel &ndash;&gt;-->
+<!--<section class="hero is-small">-->
+<!--  <div class="hero-body">-->
+<!--    <div class="container">-->
+<!--      <h2 class="title is-3">Another Carousel</h2>-->
+<!--      <div id="results-carousel" class="carousel results-carousel">-->
+<!--        <div class="item item-video1">-->
+<!--          <video poster="" id="video1" autoplay controls muted loop height="100%">-->
+<!--            &lt;!&ndash; Your video file here &ndash;&gt;-->
+<!--            <source src="static/videos/carousel1.mp4"-->
+<!--            type="video/mp4">-->
+<!--          </video>-->
+<!--        </div>-->
+<!--        <div class="item item-video2">-->
+<!--          <video poster="" id="video2" autoplay controls muted loop height="100%">-->
+<!--            &lt;!&ndash; Your video file here &ndash;&gt;-->
+<!--            <source src="static/videos/carousel2.mp4"-->
+<!--            type="video/mp4">-->
+<!--          </video>-->
+<!--        </div>-->
+<!--        <div class="item item-video3">-->
+<!--          <video poster="" id="video3" autoplay controls muted loop height="100%">\-->
+<!--            &lt;!&ndash; Your video file here &ndash;&gt;-->
+<!--            <source src="static/videos/carousel3.mp4"-->
+<!--            type="video/mp4">-->
+<!--          </video>-->
+<!--        </div>-->
+<!--      </div>-->
+<!--    </div>-->
+<!--  </div>-->
+<!--</section>-->
+<!--&lt;!&ndash; End video carousel &ndash;&gt;-->
+
+
+
+
+
+
+<!--&lt;!&ndash; Paper poster &ndash;&gt;-->
+<!--<section class="hero is-small is-light">-->
+<!--  <div class="hero-body">-->
+<!--    <div class="container">-->
+<!--      <h2 class="title">Poster</h2>-->
+
+<!--      <iframe  src="static/pdfs/sample.pdf" width="100%" height="550">-->
+<!--          </iframe>-->
+<!--        -->
+<!--      </div>-->
+<!--    </div>-->
+<!--  </section>-->
+<!--&lt;!&ndash;End paper poster &ndash;&gt;-->
+
+
+<!--BibTex citation -->
+  <section class="section" id="BibTeX">
+    <div class="container is-max-desktop content">
+      <h2 class="title">BibTeX</h2>
+      <pre><code>@misc{yan2025verifybench,
+        title={VerifyBench: Benchmarking Reference-based Reward Systems for Large Language Models}, 
+        author={Yuchen Yan and Jin Jiang and Zhenbang Ren and Yijun Li and Xudong Cai and Yang Liu and Xin Xu and Mengdi Zhang and Jian Shao and Yongliang Shen and Jun Xiao and Yueting Zhuang},
+        year={2025},
+        eprint={2505.15801},
+        archivePrefix={arXiv},
+        primaryClass={cs.CL},
+        url={https://arxiv.org/abs/2505.15801}, 
+    }</code></pre>
+    </div>
+</section>
+<!--End BibTex citation -->
+
+
+  <footer class="footer">
+  <div class="container">
+    <div class="columns is-centered">
+      <div class="column is-8">
+        <div class="content">
+
+          <p>
+            This page was built using the <a href="https://github.com/eliahuhorwitz/Academic-project-page-template" target="_blank">Academic Project Page Template</a> which was adopted from the <a href="https://nerfies.github.io" target="_blank">Nerfies</a> project page.
+            You are free to borrow the source code of this website, we just ask that you link back to this page in the footer. <br> This website is licensed under a <a rel="license"  href="http://creativecommons.org/licenses/by-sa/4.0/" target="_blank">Creative
+            Commons Attribution-ShareAlike 4.0 International License</a>.
+          </p>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<!-- Statcounter tracking code -->
+  
+<!-- You can add a tracker to track page visits by creating an account at statcounter.com -->
+
+    <!-- End of Statcounter Code -->
+
+  </body>
+  </html>
