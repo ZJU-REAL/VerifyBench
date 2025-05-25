@@ -42,7 +42,6 @@
   <script defer src="static/js/fontawesome.all.min.js"></script>
   <script src="static/js/bulma-carousel.min.js"></script>
   <script src="static/js/bulma-slider.min.js"></script>
-  <script src="static/js/index.js"></script>
   <script>
     window.MathJax = {
       tex: {
@@ -84,21 +83,8 @@
           More Research
         </a>
         <div class="navbar-dropdown">
-          <a class="navbar-item" href="https://zju-real.github.io/SBT/">
-            Self-Braking Tuning
-          </a>
-          <a class="navbar-item" href="https://zju-real.github.io/ViewSpatial-Page/">
-            ViewSpatial-Bench
-          </a>
-          <a class="navbar-item" href="https://ZJU-REAL.github.io/CoT-Bridge">
-            CoT-Bridge
-          </a>
-          <a class="navbar-item" href="https://ZJU-REAL.github.io/InftyThink">
-            InftyThink
-          </a>
+          <!-- 导航项将在这里动态加载 -->
         </div>
-
-        
       </div>
     </div>
   </div>
@@ -706,5 +692,61 @@ Large reasoning models such as OpenAI o1 and DeepSeek-R1 have demonstrated remar
 
     <!-- End of Statcounter Code -->
 
-  </body>
-  </html>
+<script>
+window.HELP_IMPROVE_VIDEOJS = false;
+
+async function loadNavItems() {
+    try {
+        const response = await fetch('https://zju-real.github.io/paper-meta-info/meta.csv');
+        const csvText = await response.text();
+        
+        // 简单的CSV解析
+        const rows = csvText.split('\n')
+            .map(row => row.trim())
+            .filter(row => row) // 移除空行
+            .map(row => {
+                const [name, url] = row.split(',').map(cell => cell.trim());
+                return { name, url };
+            });
+            
+        return rows;
+    } catch (error) {
+        console.error('Error loading navigation items:', error);
+        return [];
+    }
+}
+
+$(document).ready(async function() {
+    // 加载导航项
+    const navItems = await loadNavItems();
+    const navDropdown = $('.navbar-dropdown');
+    
+    // 清空现有的导航项
+    navDropdown.empty();
+    
+    // 添加新的导航项
+    navItems.forEach(item => {
+        const navItem = $('<a></a>')
+            .addClass('navbar-item')
+            .attr('href', item.url)
+            .text(item.name);
+        navDropdown.append(navItem);
+    });
+
+    // carousel初始化代码
+    var options = {
+        slidesToScroll: 1,
+        slidesToShow: 1,
+        loop: true,
+        infinite: true,
+        autoplay: true,
+        autoplaySpeed: 5000,
+    }
+
+    var carousels = bulmaCarousel.attach('.carousel', options);
+    bulmaSlider.attach();
+});
+</script>
+
+</body>
+</html>
