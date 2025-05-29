@@ -41,6 +41,7 @@
 </p>
 
 ## News 🔥🔥
+- **2025.05.29:** Code for evaluation is available.
 - **2025.05.25:** Home page is available.
 - **2025.05.22:** We release our paper.
 
@@ -54,6 +55,19 @@ Our contributions can be summarized as follows:
 -  To better reflect realistic reinforcement learning (RL) scenarios for reasoning models, we construct VerifyBench, a benchmark derived from existing models and datasets, to provide an objective evaluation of the accuracy of reference-based reward systems.
 - We further develop VerifyBench-Hard, a more challenging benchmark curated from cases exhibiting high disagreement among multiple models. This dataset contains a larger proportion of difficult-to-verify samples, highlighting substantial potential for improvement in current models.
 - We conduct a comprehensive empirical analysis of model performance on both VerifyBench and VerifyBench-Hard, offering actionable insights to advance the accuracy of reference-based reward systems and enhance RL training in reasoning tasks.
+
+## Try VerifyBench!
+Run `evaluate.py` to test your own models on VerifyBench and VerifyBench-Hard.
+```bash
+# for VerifyBench
+python3 evaluate.py --model_name_or_path <your_model_path>
+
+# for VerifyBench-Hard
+python3 evaluate.py --model_name_or_path <your_model_path> --hard
+
+# for No-Reference scenario
+python3 evaluate.py --model_name_or_path <your_model_path> --wo-ref
+```
   
 ## Citation
 
