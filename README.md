@@ -7,10 +7,10 @@
   Jin Jiang<sup>2,3</sup>,
   Zhenbang Ren<sup>1,4</sup>,
   Yijun Li<sup>1</sup>,
-  Xudong Cai<sup>1,5</sup>,
+  Xudong Cai<sup>1</sup>,
   Yang Liu<sup>2</sup>,
   <br>
-  Xin Xu<sup>6</sup>, 
+  Xin Xu<sup>5</sup>,
   Mengdi Zhang<sup>2</sup>,
   <strong>Jian Shao<sup>1,†</sup></strong>,  
   <strong>Yongliang Shen<sup>1,†</sup></strong>,  
@@ -24,11 +24,9 @@
   <br>
   <sup>4</sup>University of Electronic Science and Technology of China
   <br>
-  <sup>5</sup>Beijing University of Posts and Telecommunications
+  <sup>5</sup>The Hong Kong University of Science and Technology
   <br>
-  <sup>6</sup>The Hong Kong University of Science and Technology
-  <br>
-  <em>Preprint. Under review.</em>  
+  <em>ICLR 2026</em>  
   <br>
   <sup>*</sup>Contribution during internship at Meituan Group, <sup>†</sup>Corresponding Author
 </p>
@@ -41,6 +39,7 @@
 </p>
 
 ## News 🔥🔥
+- **2026.01.26:** VerifyBench has been accepted by ICLR 2026. 
 - **2025.05.29:** Code for evaluation is available.
 - **2025.05.25:** Home page is available.
 - **2025.05.22:** We release our paper.
@@ -74,14 +73,13 @@ python3 evaluate.py --model_name_or_path <your_model_path> --wo-ref
 If you find our work helpful, feel free to give us a cite.
 
 ```
-@misc{yan2025verifybench,
-    title={VerifyBench: Benchmarking Reference-based Reward Systems for Large Language Models}, 
+@inproceedings{
+    yan2026verifybench,
+    title={VerifyBench: Benchmarking Reference-based Reward Systems for Large Language Models},
     author={Yuchen Yan and Jin Jiang and Zhenbang Ren and Yijun Li and Xudong Cai and Yang Liu and Xin Xu and Mengdi Zhang and Jian Shao and Yongliang Shen and Jun Xiao and Yueting Zhuang},
-    year={2025},
-    eprint={2505.15801},
-    archivePrefix={arXiv},
-    primaryClass={cs.CL},
-    url={https://arxiv.org/abs/2505.15801}, 
+    booktitle={The Fourteenth International Conference on Learning Representations},
+    year={2026},
+    url={https://openreview.net/forum?id=JfsjGmuFxz}
 }
 ```
 
