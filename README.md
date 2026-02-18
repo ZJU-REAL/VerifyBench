@@ -34,7 +34,7 @@
 <p align="center">
 🤗 <a href="https://huggingface.co/datasets/ZJU-REAL/VerifyBench">Dataset</a> |
 <img src="docs/static/images/arxiv_logo.png" alt="arXiv" height="14"> <a href="https://arxiv.org/abs/2505.15801">Arxiv</a> 
-| 📑 <a href="https://zju-real.github.io/VerifyBench/">WebPage</a> 
+| 📑 <a href="https://zju-real.github.io/VerifyBench/">Project Page</a> 
 <br>
 </p>
 

@@ -150,16 +150,6 @@
                     <span class="eql-cntrb"><small><br><sup>*</sup>Work done during internship at Meituan Group.<sup>†</sup>Corresponding Author</small></span>
                   </div>
 
-                  <!-- Github link -->
-                  <span class="link-block">
-                    <a href="https://github.com/ZJU-REAL/VerifyBench" target="_blank" class="external-link button is-normal is-rounded is-dark">
-                    <span class="icon">
-                      <i class="fab fa-github"></i>
-                    </span>
-                    <span>Code</span>
-                    </a>
-                  </span>
-
                   <!-- ArXiv abstract Link -->
                   <span class="link-block">
                     <a href="https://arxiv.org/abs/2505.15801" target="_blank" class="external-link button is-normal is-rounded is-dark">
@@ -167,6 +157,16 @@
                         <i class="ai ai-arxiv"></i>
                       </span>
                       <span>arXiv</span>
+                    </a>
+                  </span>
+
+                  <!-- Github link -->
+                  <span class="link-block">
+                    <a href="https://github.com/ZJU-REAL/VerifyBench" target="_blank" class="external-link button is-normal is-rounded is-dark">
+                    <span class="icon">
+                      <i class="fab fa-github"></i>
+                    </span>
+                    <span>Code</span>
                     </a>
                   </span>
 
@@ -230,7 +230,7 @@
         <h2 class="title is-3">Abstract</h2>
         <div class="content has-text-justified">
           <p>
-Large reasoning models such as OpenAI o1 and DeepSeek-R1 have demonstrated remarkable performance in complex reasoning tasks. A critical component of their training is the incorporation of reference-based reward systems within reinforcement learning (RL), where model outputs are evaluated against ground truth references. However, existing reward benchmarks focus on preference comparisons between responses rather than evaluating verification against ground truth references, leaving a critical gap in our ability to evaluate verification systems used in reasoning model training. In this paper, we introduce VerifyBench and its challenging variant VerifyBench-Hard, two benchmarks specifically designed to assess reference-based reward systems. These benchmarks are constructed through meticulous data collection and curation, followed by careful human annotation to ensure high quality. Our comprehensive evaluation reveals that while larger model-based verifiers show promise on standard cases, all current systems demonstrate substantial room for improvement on challenging instances. Through systematic analysis of performance patterns across reasoning tasks and error categories, we provide insights for advancing reference-based reward systems. These benchmarks establish a standardized framework for improving verification accuracy, ultimately enhancing reasoning capabilities in models trained via RL.          
+Large reasoning models such as OpenAI o1 and DeepSeek-R1 have demonstrated remarkable performance in complex reasoning tasks. A critical component of their training is the incorporation of reference-based reward systems within reinforcement learning (RL), where model outputs are evaluated against ground truth references. However, existing reward benchmarks focus on preference comparisons between responses rather than evaluating verification against ground truth references, leaving a critical gap in our ability to evaluate verification systems used in reasoning model training. In this paper, we introduce VerifyBench and its challenging variant VerifyBench-Hard, two benchmarks specifically designed to assess reference-based reward systems. These benchmarks are constructed through meticulous data collection and curation, followed by careful human annotation to ensure high quality. Our comprehensive evaluation reveals that while larger model-based verifiers show promise on standard cases, all current systems demonstrate substantial room for improvement on challenging instances. Through systematic analysis of performance patterns across reasoning tasks and error categories, we provide insights for advancing reference-based reward systems. These benchmarks establish a standardized framework for improving verification accuracy, ultimately enhancing reasoning capabilities in models trained via RL.
           </p>
         </div>
       </div>
@@ -443,7 +443,7 @@ Large reasoning models such as OpenAI o1 and DeepSeek-R1 have demonstrated remar
     <div class="hero-body">
       <h2 class="title is-3">Overall Performance</h2>
       <p>
-        We evaluate the performance of various verification approaches on both VerifyBench and VerifyBench-hard. For rule-based baselines, we adopt the widely used math-verify package. In the LLM-as-a-judge setting, we prompt LLMs to perform verification.
+        We evaluate the performance of various verification approaches on both VerifyBench and VerifyBench-hard. For rule-based baselines, we adopt the widely used math-verify package. In the LLM-as-a-judge setting, we prompt LLMs to perform verification. Additionally, we conduct evaluations of existing verification-specialized model-based verifiers, which have been carefully trained on verification tasks, employing prompts consistent with their provided templates to ensure fairness.
       </p>
       <img src="static/images/performance.png" alt="Main experimental results of CoT-Bridge" style="width: 100%; max-height: 800px; object-fit: cover; border-radius: 10px; margin-bottom: 1.5rem;">
       <p>
@@ -516,9 +516,23 @@ Large reasoning models such as OpenAI o1 and DeepSeek-R1 have demonstrated remar
 
         <div class="item">
           <div class="carousel-content">
-            <h2 class="title is-3 has-text-centered">Correlation Analysis with Rejective Fine-tuning</h2>
+            <h2 class="title is-3 has-text-centered">Correlation Analysis with Reinforcement Learning</h2>
             <div class="image-container">
               <img src="static/images/f3.png" alt="MY ALT TEXT"/>
+            </div>
+            <div class="caption-container">
+              <h2 class="subtitle has-text-centered">
+                The performance(%) of RL across different LLM judges which have various performance on VerifyBench.
+              </h2>
+            </div>
+          </div>
+        </div>
+
+        <div class="item">
+          <div class="carousel-content">
+            <h2 class="title is-3 has-text-centered">Correlation Analysis with Rejection Sampling Fine-tuning</h2>
+            <div class="image-container">
+              <img src="static/images/f4.png" alt="MY ALT TEXT"/>
             </div>
             <div class="caption-container">
               <h2 class="subtitle has-text-centered">
